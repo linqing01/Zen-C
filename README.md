@@ -437,7 +437,7 @@ fn add(a: int, b: int) -> int {
 
 ---
 
-## 🛠️ Compiler Support & Compatibility
+## Compiler Support & Compatibility
 
 Zen C is designed to work with most C11 compilers. Some features rely on GNU C extensions, but these often work in other compilers. Use the `--cc` flag to switch backends.
 
