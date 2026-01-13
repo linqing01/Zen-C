@@ -46,6 +46,14 @@ zc build hello.zc -o hello
 zc repl
 ```
 
+### Environment Variables
+
+You can set `ZC_ROOT` to specify the location of the Standard Library (standard imports like `import "std/vector.zc"`). This allows you to run `zc` from any directory.
+
+```bash
+export ZC_ROOT=/path/to/Zen-C
+```
+
 ---
 
 ## Language Reference

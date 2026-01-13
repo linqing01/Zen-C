@@ -490,6 +490,28 @@ char *load_file(const char *fn)
     FILE *f = fopen(fn, "rb");
     if (!f)
     {
+        char *root = getenv("ZC_ROOT");
+        if (root)
+        {
+            char path[1024];
+            snprintf(path, sizeof(path), "%s/%s", root, fn);
+            f = fopen(path, "rb");
+        }
+    }
+    if (!f)
+    {
+        char path[1024];
+        snprintf(path, sizeof(path), "/usr/local/lib/zen/%s", fn);
+        f = fopen(path, "rb");
+    }
+    if (!f)
+    {
+        char path[1024];
+        snprintf(path, sizeof(path), "/usr/lib/zen/%s", fn);
+        f = fopen(path, "rb");
+    }
+    if (!f)
+    {
         return 0;
     }
     fseek(f, 0, SEEK_END);
@@ -538,7 +560,10 @@ void scan_build_directives(ParserContext *ctx, const char *src)
             if (0 == strncmp(line, "link:", 5))
             {
                 char *val = line + 5;
-                while (*val == ' ') val++;
+                while (*val == ' ')
+                {
+                    val++;
+                }
                 if (strlen(g_link_flags) > 0)
                 {
                     strcat(g_link_flags, " ");
@@ -548,7 +573,10 @@ void scan_build_directives(ParserContext *ctx, const char *src)
             else if (0 == strncmp(line, "cflags:", 7))
             {
                 char *val = line + 7;
-                while (*val == ' ') val++;
+                while (*val == ' ')
+                {
+                    val++;
+                }
                 if (strlen(g_cflags) > 0)
                 {
                     strcat(g_cflags, " ");
@@ -558,7 +586,10 @@ void scan_build_directives(ParserContext *ctx, const char *src)
             else if (0 == strncmp(line, "include:", 8))
             {
                 char *val = line + 8;
-                while (*val == ' ') val++;
+                while (*val == ' ')
+                {
+                    val++;
+                }
                 char flags[2048];
                 sprintf(flags, "-I%s", val);
                 if (strlen(g_cflags) > 0)
@@ -570,7 +601,10 @@ void scan_build_directives(ParserContext *ctx, const char *src)
             else if (strncmp(line, "lib:", 4) == 0)
             {
                 char *val = line + 4;
-                while (*val == ' ') val++;
+                while (*val == ' ')
+                {
+                    val++;
+                }
                 char flags[2048];
                 sprintf(flags, "-L%s", val);
                 if (strlen(g_link_flags) > 0)
@@ -582,7 +616,10 @@ void scan_build_directives(ParserContext *ctx, const char *src)
             else if (strncmp(line, "define:", 7) == 0)
             {
                 char *val = line + 7;
-                while (*val == ' ') val++;
+                while (*val == ' ')
+                {
+                    val++;
+                }
                 char flags[2048];
                 sprintf(flags, "-D%s", val);
                 if (strlen(g_cflags) > 0)
